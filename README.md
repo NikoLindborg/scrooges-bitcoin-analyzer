@@ -1,6 +1,6 @@
 # Scroogees bitcoin analyzer
 
-The application is deployed to heroky at https://scroogez-bitcoin-analyzer.herokuapp.com/
+The application is deployed to heroku at https://scroogez-bitcoin-analyzer.herokuapp.com/
 
 The application was built using react, and i used react-datepicker as an external library for convenience sake.
 
