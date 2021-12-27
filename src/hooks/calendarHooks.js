@@ -1,25 +1,38 @@
+import { useState } from 'react'
 import { getCoinData } from '../hooks/apiHooks'
 
 const useCalendar = () => {
+  const [analyzedData, setAnalyzedData] = useState({
+    highestVolume: [],
+    downwardTrend: [],
+    bestProfit: [],
+  })
+  const [errorMessage, setErrorMessage] = useState()
+
   const analyzeDates = async (startDate, endDate) => {
     const beginning = parseInt(new Date(startDate).getTime() / 1000)
     const end = parseInt(new Date(endDate).getTime() / 1000)
-    const coinData = await getCoinData(beginning, end)
-    /**  const formattedMarketCaps = coinData.market_caps.map((e) => {
-      const date = new Date(e[0]).toLocaleString('en-FI')
-      const value = e[1].toFixed(2)
-      return [date, `${value}€`]
-    })*/
-    const highestVolume = findLargestNode(coinData.total_volumes)
-    const downwardTrend = findLongestDownwardTrend(coinData.prices)
-    const bestProfit = findBestProfit(coinData.prices)
-    // downwardTrend.forEach((e) => {
-    //const date = new Date(e[0]).toLocaleString('en-FI')
-    //  console.log(date, e[1])
-    //})
-    console.log(highestVolume)
-    console.log(downwardTrend)
-    console.log(bestProfit)
+    try {
+      setErrorMessage('Invalid date')
+      const today = parseInt(new Date().getTime() / 1000)
+      if (beginning === 0 || end === 0 || end > today) {
+        setErrorMessage('Invalid date')
+        return
+      }
+      setErrorMessage()
+      const coinData = await getCoinData(beginning, end)
+      const highestVolume = findLargestNode(coinData.total_volumes)
+      const downwardTrend = findLongestDownwardTrend(coinData.prices)
+      const bestProfit = findBestProfit(coinData.prices)
+      setAnalyzedData({
+        highestVolume: highestVolume,
+        downwardTrend: downwardTrend,
+        bestProfit: bestProfit,
+      })
+    } catch (error) {
+      setErrorMessage('Invalid date')
+      console.log(error)
+    }
   }
 
   const removeMultipleSameDates = (list) => {
@@ -47,7 +60,6 @@ const useCalendar = () => {
     let maxDay
     let minDay
     let max_diff = filteredList[1][1] - filteredList[0][1]
-    console.log(findLargestNode(list))
     for (let i = 0; i < filteredList.length; i++) {
       for (let j = i + 1; j < filteredList.length; j++) {
         if (filteredList[j][1] - filteredList[i][1] > max_diff) {
@@ -75,11 +87,19 @@ const useCalendar = () => {
         }
         streak = []
       }
+      if (i + 1 === filteredList.length) {
+        if (streak.length >= longestStreak.length) {
+          longestStreak = streak
+        }
+        streak = []
+      }
     }
     return longestStreak
   }
   return {
     analyzeDates,
+    analyzedData,
+    errorMessage,
   }
 }
 

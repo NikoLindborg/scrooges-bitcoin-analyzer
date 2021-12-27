@@ -1,14 +1,56 @@
 .App {
   text-align: center;
-}
-.calendarContainer {
+  display: flex;
+  flex-direction: column;
   position: absolute;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: black;
+  top: 25%;
+  align-self: center;
+  margin: auto;
+  padding: 0;
+  justify-content: center;
+  -ms-flex-item-align: center;
 }
+
+.calendarContainer {
+  color: red;
+  z-index: 2;
+  align-content: center;
+  text-align: center;
+  align-content: center;
+  width: max-content;
+}
+
 .container {
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
+  align-self: center;
+  margin: 0;
+  width: min-content;
+  background-color: black;
+  position: relative;
+  right: 50%
+}
+
+.error {
+  color: red;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.messageContainer {
+  z-index: 1;
+  display: flex;
+  margin: auto;
+  position: relative;
+  right: 50%
+}
+
+ul {
+  list-style-type: none;
 }
