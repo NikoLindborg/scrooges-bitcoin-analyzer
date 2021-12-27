@@ -29,18 +29,14 @@ const Calendar = ({
         endDate={endDate}
         showYearDropdown
         onChange={(update) => {
+          console.log(update)
           setDateRange(update)
         }}
       />
       <button
         className="pickerButton"
         onClick={() => {
-          if (
-            startDate === 0 ||
-            !startDate ||
-            endDate === 0 ||
-            !endDate
-          ) {
+          if (startDate === 0 || !startDate || endDate === 0 || !endDate) {
             setDisplayMessage(false)
           } else {
             setDisplayMessage(true)

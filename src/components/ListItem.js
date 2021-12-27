@@ -6,7 +6,7 @@ const ListItem = ({ item }) => {
     <p>
       {item[1].toFixed(2)}€
       {' '}
-      {date.toISOString().split('T')[0]}
+      {date.toLocaleString('en-FI').split(',')[0]}
     </p>
   )
 }

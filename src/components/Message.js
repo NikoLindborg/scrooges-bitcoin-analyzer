@@ -6,11 +6,11 @@ const Message = ({ coinData, display, dates }) => {
   let dayToSell
   if (coinData.bestProfit.dayToSell) {
     dayToBuy = new Date(coinData.bestProfit.dayToBuy[0])
-      .toISOString()
-      .split('T')[0]
+      .toLocaleString('en-FI')
+      .split(',')[0]
     dayToSell = new Date(coinData.bestProfit.dayToSell[0])
-      .toISOString()
-      .split('T')[0]
+      .toLocaleString('en-FI')
+      .split(',')[0]
   }
 
   return (
@@ -19,8 +19,8 @@ const Message = ({ coinData, display, dates }) => {
         <div>
           <p>
             Trends within your chosen date range of{' '}
-            {dates[0].toISOString().split('T')[0]} -{' '}
-            {dates[1].toISOString().split('T')[0]}{' '}
+            {dates[0].toLocaleString('en-FI').split(',')[0]} -{' '}
+            {dates[1].toLocaleString('en-FI').split(',')[0]}{' '}
           </p>
           {coinData.bestProfit.dayToSell ? (
             <div>
@@ -32,11 +32,15 @@ const Message = ({ coinData, display, dates }) => {
                 The best date to sell coins within this time period is{' '}
                 {dayToSell} for {coinData.bestProfit.dayToSell[1].toFixed()}€
               </p>
-              <p>for a profit of {coinData.bestProfit.profit.toFixed()}€ per each coin</p>
+              <p>
+                for a profit of {coinData.bestProfit.profit.toFixed()}€ per each
+                coin
+              </p>
             </div>
           ) : (
             <p>
-              There wasn't any profit to be made from bitcoin trading during the given days.
+              There wasn't any profit to be made from bitcoin trading during the
+              given days.
             </p>
           )}
           {coinData.downwardTrend.length > 0 ? (
